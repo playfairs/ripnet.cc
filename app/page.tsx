@@ -108,7 +108,7 @@ export default function Home() {
               </span>
               <ArrowRight aria-hidden="true" size={15} />
             </a>
-            <a href="https://github.com/ripnetwork/ripnet" rel="noreferrer" target="_blank">
+            <a href="https://github.com/playfairs/ripnet" rel="noreferrer" target="_blank">
               <span>
                 <strong>GitHub</strong>
                 <small>Open source repository</small>

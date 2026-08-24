@@ -21,7 +21,7 @@ export default function Downloads() {
             <Download aria-hidden="true" size={16} />
           </div>
           <div className="command-examples">
-            <div className="command-line"><code>git clone https://github.com/ripnetwork/ripnet.git</code></div>
+            <div className="command-line"><code>git clone https://github.com/playfairs/ripnet.git</code></div>
             <div className="command-line"><code>cd ripnet</code></div>
             <div className="command-line"><code>make &amp;&amp; sudo make install</code></div>
           </div>

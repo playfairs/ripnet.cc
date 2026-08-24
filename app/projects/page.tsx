@@ -7,7 +7,7 @@ const projects = [
     tags: ['C', 'Networking', 'CLI'],
     icon: Code,
     status: 'active',
-    link: 'https://github.com/ripnetwork/ripnet',
+    link: 'https://github.com/playfairs/ripnet',
   },
   {
     name: 'ripnet-web',
@@ -15,7 +15,7 @@ const projects = [
     tags: ['Next.js', 'Docs', 'Website'],
     icon: Monitor,
     status: 'active',
-    link: 'https://github.com/ripnetwork/web',
+    link: 'https://github.com/playfairs/ripnet.cc',
   },
   {
     name: 'ripnet-gui',
@@ -102,11 +102,11 @@ export default function Projects() {
         <div className="option-table">
           <div>
             <code>GitHub</code>
-            <span><a href="https://github.com/ripnetwork" rel="noreferrer" target="_blank">Explore the organization</a></span>
+            <span><a href="https://github.com/playfairs/ripnet" rel="noreferrer" target="_blank">Explore the organization</a></span>
           </div>
           <div>
             <code>Issues</code>
-            <span><a href="https://github.com/ripnetwork/ripnet/issues" rel="noreferrer" target="_blank">Report bugs and suggest enhancements</a></span>
+            <span><a href="https://github.com/playfairs/ripnet/issues" rel="noreferrer" target="_blank">Report bugs and suggest enhancements</a></span>
           </div>
         </div>
       </section>
