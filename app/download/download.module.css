@@ -1,0 +1,200 @@
+.page {
+  display: grid;
+  gap: 24px;
+}
+.hero {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 36px;
+  align-items: end;
+  border-top: 1px solid var(--highlight-med);
+  border-bottom: 1px solid var(--highlight-med);
+  padding: 58px 0 42px;
+}
+.hero h1 {
+  max-width: 700px;
+  margin-bottom: 18px;
+}
+.lede {
+  max-width: 590px;
+  margin-bottom: 0;
+  color: var(--subtle);
+  font-size: 1.06rem;
+}
+.releaseStamp {
+  display: grid;
+  gap: 5px;
+  min-width: 190px;
+  border-left: 2px solid var(--love);
+  padding: 9px 0 9px 18px;
+}
+.releaseStamp span,
+.releaseStamp small {
+  color: var(--subtle);
+  font: 0.68rem var(--mono);
+  text-transform: uppercase;
+}
+.releaseStamp strong {
+  color: var(--foam);
+  font: 800 1.45rem var(--mono);
+}
+.assetGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  border: 1px solid var(--highlight-med);
+  background: var(--highlight-med);
+}
+.assetCard {
+  display: grid;
+  gap: 20px;
+  min-width: 0;
+  background: var(--surface);
+  padding: 26px;
+}
+.assetCard:hover {
+  background: var(--overlay);
+}
+.assetTop {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+.assetTop > svg {
+  color: var(--foam);
+}
+.assetTop .eyebrow {
+  margin-bottom: 8px;
+}
+.assetTop h2 {
+  margin: 0;
+  font-size: 1.45rem;
+  letter-spacing: -0.05em;
+}
+.assetMeta {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  border-top: 1px solid var(--highlight-med);
+  border-bottom: 1px solid var(--highlight-med);
+  color: var(--subtle);
+  padding: 11px 0;
+  font: 0.68rem var(--mono);
+}
+.assetMeta span:first-child {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.assetCard .primary-action {
+  justify-self: start;
+}
+.disabledAction {
+  justify-self: start;
+  border-radius: 6px;
+  background: var(--highlight-med);
+  color: var(--subtle);
+  padding: 11px 15px;
+  font-weight: 800;
+}
+.cardHint {
+  margin: -6px 0 0;
+  color: var(--subtle);
+  font-size: 0.78rem;
+}
+.cardHint code,
+.installPanel code {
+  font-family: var(--mono);
+}
+.installGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  border: 1px solid var(--highlight-med);
+  background: var(--highlight-med);
+}
+.installPanel {
+  background: var(--highlight-low);
+  padding: 26px;
+}
+.panelHeading {
+  display: flex;
+  gap: 13px;
+  align-items: flex-start;
+}
+.panelHeading > svg {
+  flex: 0 0 auto;
+  color: var(--gold);
+}
+.panelHeading .eyebrow {
+  margin-bottom: 8px;
+}
+.panelHeading h2 {
+  margin: 0;
+  font-size: 1.35rem;
+  letter-spacing: -0.04em;
+}
+.installPanel ol {
+  display: grid;
+  gap: 8px;
+  margin: 24px 0;
+  padding-left: 20px;
+  color: var(--subtle);
+  font-size: 0.86rem;
+}
+.installPanel > code {
+  display: block;
+  overflow-x: auto;
+  border: 1px solid var(--highlight-med);
+  background: var(--mantle);
+  color: var(--foam);
+  padding: 14px;
+  font-size: 0.7rem;
+  line-height: 1.8;
+}
+.installPanel > p {
+  margin: 15px 0 0;
+  color: var(--subtle);
+  font-size: 0.78rem;
+}
+.installPanel > p code {
+  color: var(--text);
+}
+.sourceLine {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-top: 1px solid var(--highlight-med);
+  color: var(--subtle);
+  padding-top: 18px;
+  font-size: 0.78rem;
+}
+.sourceLine > svg {
+  color: var(--foam);
+}
+.sourceLine a {
+  margin-left: auto;
+  color: var(--foam);
+  font-weight: 800;
+}
+.sourceLine a:hover {
+  color: var(--text);
+}
+@media(max-width:700px) {
+  .hero,
+  .assetGrid,
+  .installGrid {
+    grid-template-columns: 1fr;
+  }
+  .releaseStamp {
+    min-width: 0;
+  }
+  .sourceLine {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+  .sourceLine a {
+    width: 100%;
+    margin-left: 28px;
+  }
+}

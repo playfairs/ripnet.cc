@@ -2,6 +2,19 @@ import { readFileSync } from "node:fs";
 import path from "node:path";
 import { ArrowRight, Github, Shield, Terminal } from "lucide-react";
 
+const versionUrl =
+  "https://raw.githubusercontent.com/playfairs/ripnet/refs/heads/master/VERSION";
+
+async function getLatestVersion() {
+  try {
+    const response = await fetch(versionUrl, { next: { revalidate: 300 } });
+    if (!response.ok) return "unavailable";
+    return (await response.text()).trim() || "unavailable";
+  } catch {
+    return "unavailable";
+  }
+}
+
 const commandCount = (
   readFileSync(path.join(process.cwd(), "data/commands.yaml"), "utf8").match(
     /^  - name:/gm,
@@ -14,7 +27,9 @@ const examples = [
   ["Resolve a domain", "ripnet dns-lookup playfairs.cc"],
 ];
 
-export default function Home() {
+export default async function Home() {
+  const latestVersion = await getLatestVersion();
+
   return (
     <div className="overview-page">
       <section className="overview-hero">
@@ -28,6 +43,9 @@ export default function Home() {
             discovery, and authorized testing into one focused command line.
           </p>
           <div className="hero-actions">
+            <a className="primary-action" href="/download">
+              Download v{latestVersion} <ArrowRight size={16} />
+            </a>
             <a className="primary-action" href="/commands">
               Explore commands <ArrowRight size={16} />
             </a>
@@ -70,6 +88,10 @@ export default function Home() {
         </div>
       </section>
       <section className="stat-grid">
+        <div>
+          <strong>v{latestVersion}</strong>
+          <span>latest version</span>
+        </div>
         <div>
           <strong>{commandCount}</strong>
           <span>commands documented</span>

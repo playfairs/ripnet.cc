@@ -14,6 +14,7 @@ export default function Navigation() {
         <nav>
           <a href="/commands">Commands</a>
           <a href="/quick-start">Quick start</a>
+          <a href="/download">Download</a>
         </nav>
         <a
           className="shell-github"
@@ -42,6 +43,9 @@ export default function Navigation() {
             </a>
             <a href="/quick-start" onClick={() => setOpen(false)}>
               Quick start
+            </a>
+            <a href="/download" onClick={() => setOpen(false)}>
+              Download
             </a>
             <a href="https://github.com/playfairs/ripnet">GitHub</a>
           </nav>
