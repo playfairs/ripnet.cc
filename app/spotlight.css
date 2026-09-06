@@ -1,0 +1,45 @@
+.commands-page .command-toolbar {
+  position: sticky;
+  top: 14px;
+  z-index: 3;
+  align-items: center;
+}
+.commands-page .search-field {
+  border: 1px solid var(--highlight-med);
+  border-radius: 12px;
+  background: rgba(42, 39, 63, 0.94);
+  box-shadow:
+    0 14px 36px rgba(15, 13, 30, 0.28),
+    0 0 0 5px rgba(196, 167, 231, 0.05);
+  color: var(--foam);
+  padding: 12px 14px;
+  backdrop-filter: blur(16px);
+}
+.commands-page .search-field:focus-within {
+  border-color: var(--iris);
+  box-shadow:
+    0 14px 36px rgba(15, 13, 30, 0.34),
+    0 0 0 5px rgba(196, 167, 231, 0.12);
+}
+.commands-page .search-field input::placeholder {
+  color: var(--subtle);
+}
+.commands-page .category-list {
+  padding: 4px;
+}
+.commands-page .category-list button {
+  background: rgba(42, 39, 63, 0.72);
+}
+@media (max-width: 900px) {
+  .commands-page .command-toolbar {
+    top: 8px;
+  }
+  .commands-page .search-field {
+    width: 100%;
+  }
+  .commands-page .category-list {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding-bottom: 8px;
+  }
+}

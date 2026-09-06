@@ -1,0 +1,579 @@
+# Source: src/ripnet/app/cli.d and src/ripnet/app/main.d
+
+commands:
+  - name: arp-cache-add
+    category: local-network
+    description: Add a persistent ARP cache entry.
+    usage: ripnet arp-cache-add --ip IP --mac MAC --interface NAME
+    flags: [--ip, --mac, --interface]
+    status: privileged
+  - name: arp-cache-delete
+    category: local-network
+    description: Delete an ARP cache entry.
+    usage: ripnet arp-cache-delete --ip IP --interface NAME
+    flags: [--ip, --interface]
+    status: privileged
+  - name: arp-reply
+    category: local-network
+    description: Add an ARP reply entry.
+    usage: ripnet arp-reply --ip IP --mac MAC --interface NAME
+    flags: [--ip, --mac, --interface]
+    status: privileged
+  - name: arp-request
+    category: local-network
+    description: Request an ARP neighbor entry.
+    usage: ripnet arp-request IP --interface NAME
+    flags: [--interface]
+    status: privileged
+  - name: arp-scan
+    category: local-network
+    description: Inspect ARP neighbors.
+    usage: ripnet arp-scan NETWORK
+    flags: []
+    status: available
+  - name: arp-spoof-detect
+    category: local-network
+    description: Check for suspicious ARP behavior.
+    usage: ripnet arp-spoof-detect --interface NAME
+    flags: [--interface]
+    status: privileged
+  - name: arp-table
+    category: local-network
+    description: Read the local ARP table.
+    usage: ripnet arp-table
+    flags: []
+    status: available
+  - name: bandwidth-history
+    category: monitoring
+    description: Read recorded bandwidth history.
+    usage: ripnet bandwidth-history
+    flags: []
+    status: platform
+  - name: bandwidth-limit
+    category: monitoring
+    description: Apply a bandwidth limit.
+    usage: ripnet bandwidth-limit --max-bps N
+    flags: [--max-bps]
+    status: privileged
+  - name: bandwidth-monitor
+    category: monitoring
+    description: Watch bandwidth over an interval.
+    usage: ripnet bandwidth-monitor --interface NAME --interval N
+    flags: [--interface, --interval]
+    status: available
+  - name: bandwidth-shaper
+    category: monitoring
+    description: Apply bandwidth shaping.
+    usage: ripnet bandwidth-shaper
+    flags: []
+    status: platform
+  - name: bandwidth-speedtest
+    category: monitoring
+    description: Run a configured speed test.
+    usage: ripnet bandwidth-speedtest
+    flags: []
+    status: platform
+  - name: bandwidth-test
+    category: monitoring
+    description: Measure interface throughput.
+    usage: ripnet bandwidth-test --interface NAME --interval N
+    flags: [--interface, --interval]
+    status: available
+  - name: block-ip
+    category: firewall
+    description: Block an IP address.
+    usage: ripnet block-ip --ip IP
+    flags: [--ip]
+    status: privileged
+  - name: block-port
+    category: firewall
+    description: Block a port and protocol.
+    usage: ripnet block-port --port N --protocol tcp
+    flags: [--port, --protocol]
+    status: privileged
+  - name: capture
+    category: capture
+    description: Capture and parse packets through libpcap.
+    usage: ripnet capture --interface NAME --count N --filter BPF
+    flags: [--interface, --count, --filter, --promisc]
+    status: privileged
+  - name: ddos
+    category: other
+    description: Historical harmless easter egg; does not perform an attack.
+    usage: ripnet ddos
+    flags: []
+    status: available
+  - name: discovery-arp
+    category: discovery
+    description: Discover local hosts from ARP data.
+    usage: ripnet discovery-arp NETWORK
+    flags: []
+    status: available
+  - name: discovery-dns
+    category: discovery
+    description: Discover addresses for a domain.
+    usage: ripnet discovery-dns DOMAIN
+    flags: []
+    status: available
+  - name: discovery-http
+    category: discovery
+    description: Discover HTTP services.
+    usage: ripnet discovery-http NETWORK
+    flags: []
+    status: platform
+  - name: discovery-llmnr
+    category: discovery
+    description: Discover LLMNR responders.
+    usage: ripnet discovery-llmnr NETWORK
+    flags: []
+    status: platform
+  - name: discovery-mdns
+    category: discovery
+    description: Discover mDNS services.
+    usage: ripnet discovery-mdns NETWORK
+    flags: []
+    status: platform
+  - name: discovery-netbios
+    category: discovery
+    description: Discover NetBIOS hosts.
+    usage: ripnet discovery-netbios NETWORK
+    flags: []
+    status: platform
+  - name: discovery-ping
+    category: discovery
+    description: Discover responsive hosts in a range.
+    usage: ripnet discovery-ping NETWORK
+    flags: []
+    status: available
+  - name: discovery-smb
+    category: discovery
+    description: Discover SMB hosts.
+    usage: ripnet discovery-smb NETWORK
+    flags: []
+    status: platform
+  - name: discovery-snmp
+    category: discovery
+    description: Discover SNMP devices.
+    usage: ripnet discovery-snmp NETWORK
+    flags: []
+    status: platform
+  - name: discovery-ssl
+    category: discovery
+    description: Discover TLS services.
+    usage: ripnet discovery-ssl NETWORK
+    flags: []
+    status: platform
+  - name: discovery-upnp
+    category: discovery
+    description: Discover UPnP devices.
+    usage: ripnet discovery-upnp NETWORK
+    flags: []
+    status: platform
+  - name: dns-bruteforce
+    category: dns
+    description: Resolve names from a wordlist.
+    usage: ripnet dns-bruteforce DOMAIN --wordlist PATH
+    flags: [--wordlist]
+    status: available
+  - name: dns-cache-flush
+    category: dns
+    description: Flush the local DNS cache where supported.
+    usage: ripnet dns-cache-flush
+    flags: []
+    status: platform
+  - name: dns-query
+    category: dns
+    description: Query a DNS record type.
+    usage: ripnet dns-query DOMAIN --record-type A
+    flags: [--record-type]
+    status: available
+  - name: dns-reverse
+    category: dns
+    description: Resolve an address to a hostname.
+    usage: ripnet dns-reverse IP
+    flags: []
+    status: available
+  - name: dns-server-test
+    category: dns
+    description: Measure a DNS server response.
+    usage: ripnet dns-server-test SERVER
+    flags: []
+    status: available
+  - name: dns-trace
+    category: dns
+    description: Trace DNS resolution.
+    usage: ripnet dns-trace DOMAIN
+    flags: []
+    status: platform
+  - name: dns-lookup
+    category: dns
+    description: Resolve a hostname to addresses.
+    usage: ripnet dns-lookup DOMAIN
+    flags: []
+    status: available
+  - name: dns-zone-transfer
+    category: dns
+    description: Attempt an authorized zone transfer.
+    usage: ripnet dns-zone-transfer DOMAIN --dns-server IP
+    flags: [--dns-server]
+    status: platform
+  - name: dnssec-verify
+    category: dns
+    description: Verify DNSSEC for a domain.
+    usage: ripnet dnssec-verify DOMAIN
+    flags: []
+    status: platform
+  - name: firewall-add
+    category: firewall
+    description: Add an authorized firewall rule.
+    usage: ripnet firewall-add --chain NAME --rule RULE
+    flags: [--chain, --rule]
+    status: privileged
+  - name: firewall-delete
+    category: firewall
+    description: Delete an authorized firewall rule.
+    usage: ripnet firewall-delete --chain NAME --port N
+    flags: [--chain, --port]
+    status: privileged
+  - name: firewall-flush
+    category: firewall
+    description: Flush an authorized firewall chain.
+    usage: ripnet firewall-flush --chain NAME
+    flags: [--chain]
+    status: privileged
+  - name: firewall-log
+    category: firewall
+    description: Show firewall logging state.
+    usage: ripnet firewall-log
+    flags: []
+    status: platform
+  - name: firewall-status
+    category: firewall
+    description: Show firewall state.
+    usage: ripnet firewall-status
+    flags: []
+    status: platform
+  - name: fin-scan
+    category: scanning
+    description: Run a FIN-style scan.
+    usage: ripnet fin-scan TARGET --start-port N --end-port N
+    flags: [--start-port, --end-port, --timeout, --verbose]
+    status: privileged
+  - name: http-stress
+    category: load-testing
+    description: Run an authorized HTTP workload.
+    usage: ripnet http-stress DOMAIN --port N --duration N
+    flags: [--port, --duration, --concurrency, --path]
+    status: privileged
+  - name: list-interfaces
+    category: interfaces
+    description: List local interfaces and counters.
+    usage: ripnet list-interfaces
+    flags: [--json]
+    status: available
+  - name: monitor-alert
+    category: monitoring
+    description: Check a throughput threshold.
+    usage: ripnet monitor-alert --interface NAME --threshold N
+    flags: [--interface, --threshold]
+    status: available
+  - name: monitor-export
+    category: monitoring
+    description: Export monitor data as JSON.
+    usage: ripnet monitor-export --interface NAME --export PATH
+    flags: [--interface, --export]
+    status: available
+  - name: monitor-log
+    category: monitoring
+    description: Export monitor data to a log.
+    usage: ripnet monitor-log --interface NAME --log PATH
+    flags: [--interface, --log]
+    status: available
+  - name: monitor-start
+    category: monitoring
+    description: Start interface monitoring.
+    usage: ripnet monitor-start --interface NAME
+    flags: [--interface]
+    status: available
+  - name: monitor-status
+    category: monitoring
+    description: Show the current monitor snapshot.
+    usage: ripnet monitor-status --interface NAME
+    flags: [--interface]
+    status: available
+  - name: monitor-stop
+    category: monitoring
+    description: Stop interface monitoring.
+    usage: ripnet monitor-stop
+    flags: []
+    status: available
+  - name: netstat
+    category: system
+    description: List active network connections.
+    usage: ripnet netstat
+    flags: [--json]
+    status: platform
+  - name: netstat-group
+    category: system
+    description: Show grouped connection data.
+    usage: ripnet netstat-group
+    flags: [--json]
+    status: platform
+  - name: netstat-interface
+    category: system
+    description: Show interface network state.
+    usage: ripnet netstat-interface --interface NAME
+    flags: [--interface, --json]
+    status: available
+  - name: netstat-listening
+    category: system
+    description: List listening sockets.
+    usage: ripnet netstat-listening
+    flags: [--json]
+    status: platform
+  - name: netstat-process
+    category: system
+    description: Show network activity for a process.
+    usage: ripnet netstat-process --pid PID
+    flags: [--pid, --json]
+    status: platform
+  - name: netstat-route
+    category: system
+    description: Show the system routing table.
+    usage: ripnet netstat-route
+    flags: [--json]
+    status: platform
+  - name: netstat-timer
+    category: system
+    description: Show timed connection data.
+    usage: ripnet netstat-timer
+    flags: [--json]
+    status: platform
+  - name: network-scan
+    category: scanning
+    description: Scan hosts in an IPv4 network range.
+    usage: ripnet network-scan NETWORK [--port N]
+    flags: [--port, --timeout]
+    status: available
+  - name: null-scan
+    category: scanning
+    description: Run a NULL-style scan.
+    usage: ripnet null-scan TARGET --start-port N --end-port N
+    flags: [--start-port, --end-port, --timeout, --verbose]
+    status: privileged
+  - name: os-fingerprint
+    category: scanning
+    description: Report the current OS fingerprint result.
+    usage: ripnet os-fingerprint TARGET
+    flags: []
+    status: available
+  - name: packet-flood
+    category: load-testing
+    description: Privileged packet flood operation.
+    usage: ripnet packet-flood --interface NAME
+    flags: [--interface, --duration, --rate-limit]
+    status: limited
+  - name: ping
+    category: reachability
+    description: Probe a host over the default TCP path.
+    usage: ripnet ping TARGET [--port N]
+    flags: [--port, --timeout, --count]
+    status: available
+  - name: ping-flood
+    category: load-testing
+    description: Privileged ping flood operation.
+    usage: ripnet ping-flood TARGET
+    flags: [--count, --duration, --rate-limit]
+    status: limited
+  - name: ping-sweep
+    category: reachability
+    description: Sweep a network range for responsive hosts.
+    usage: ripnet ping-sweep NETWORK
+    flags: [--timeout]
+    status: available
+  - name: ping-tcp
+    category: reachability
+    description: Test TCP connectivity to a target port.
+    usage: ripnet ping-tcp TARGET --port N
+    flags: [--port, --timeout]
+    status: available
+  - name: ping-udp
+    category: reachability
+    description: Send a UDP reachability probe.
+    usage: ripnet ping-udp TARGET --port N
+    flags: [--port, --timeout]
+    status: available
+  - name: port-knocking
+    category: security
+    description: Port knocking workflow.
+    usage: ripnet port-knocking TARGET
+    flags: [--port]
+    status: limited
+  - name: port-scan
+    category: scanning
+    description: Run a TCP port scan.
+    usage: ripnet port-scan TARGET --start-port N --end-port N
+    flags: [--start-port, --end-port, --timeout, --verbose]
+    status: available
+  - name: route-get
+    category: routing
+    description: Look up routes for a destination.
+    usage: ripnet route-get IP
+    flags: []
+    status: available
+  - name: route-monitor
+    category: routing
+    description: Monitor route state.
+    usage: ripnet route-monitor IP
+    flags: [--interval]
+    status: platform
+  - name: route-table
+    category: routing
+    description: Read the local route table.
+    usage: ripnet route-table
+    flags: []
+    status: available
+  - name: route-trace
+    category: routing
+    description: Trace a route to a destination.
+    usage: ripnet route-trace IP
+    flags: [--timeout]
+    status: platform
+  - name: scan
+    category: scanning
+    description: Scan a TCP range with live progress.
+    usage: ripnet scan TARGET --start-port N --end-port N --verbose
+    flags: [--start-port, --end-port, --timeout, --verbose]
+    status: available
+  - name: scan-processes
+    category: system
+    description: Find processes using the network.
+    usage: ripnet scan-processes --process FILTER
+    flags: [--process, --pid]
+    status: platform
+  - name: security-audit
+    category: security
+    description: Run an authorized security audit.
+    usage: ripnet security-audit DOMAIN
+    flags: [--verbose, --json]
+    status: platform
+  - name: security-banner
+    category: security
+    description: Probe a service banner.
+    usage: ripnet security-banner DOMAIN --port N
+    flags: [--port, --timeout]
+    status: available
+  - name: security-dns
+    category: security
+    description: Run DNS security checks.
+    usage: ripnet security-dns DOMAIN
+    flags: [--dns-server, --verbose]
+    status: platform
+  - name: security-http
+    category: security
+    description: Check HTTP reachability.
+    usage: ripnet security-http DOMAIN --port 80
+    flags: [--port, --timeout]
+    status: available
+  - name: security-scan
+    category: security
+    description: Run an authorized security scan.
+    usage: ripnet security-scan DOMAIN
+    flags: [--port, --verbose]
+    status: platform
+  - name: security-smtp
+    category: security
+    description: Check SMTP reachability.
+    usage: ripnet security-smtp DOMAIN --port 25
+    flags: [--port, --timeout]
+    status: available
+  - name: security-ssh
+    category: security
+    description: Check SSH reachability.
+    usage: ripnet security-ssh DOMAIN --port 22
+    flags: [--port, --timeout]
+    status: available
+  - name: security-ssl
+    category: security
+    description: Check TLS reachability.
+    usage: ripnet security-ssl DOMAIN --port 443
+    flags: [--port, --timeout]
+    status: available
+  - name: service-scan
+    category: scanning
+    description: Scan a port and identify its known service.
+    usage: ripnet service-scan TARGET --port N
+    flags: [--port, --timeout]
+    status: available
+  - name: show-stats
+    category: interfaces
+    description: Show interface packet and byte statistics.
+    usage: ripnet show-stats [--interface NAME]
+    flags: [--interface, --json]
+    status: available
+  - name: syn-scan
+    category: scanning
+    description: Run a SYN-style scan.
+    usage: ripnet syn-scan TARGET --start-port N --end-port N
+    flags: [--start-port, --end-port, --timeout, --verbose]
+    status: privileged
+  - name: tcp-stress
+    category: load-testing
+    description: Run an authorized TCP workload.
+    usage: ripnet tcp-stress DOMAIN --port N --duration N
+    flags: [--port, --duration, --concurrency, --rate-limit]
+    status: privileged
+  - name: traceroute
+    category: reachability
+    description: Trace a route to a target.
+    usage: ripnet traceroute TARGET
+    flags: [--port, --timeout]
+    status: platform
+  - name: traceroute-icmp
+    category: reachability
+    description: Trace using ICMP probes.
+    usage: ripnet traceroute-icmp TARGET
+    flags: [--timeout]
+    status: platform
+  - name: traceroute-tcp
+    category: reachability
+    description: Trace using TCP probes.
+    usage: ripnet traceroute-tcp TARGET --port N
+    flags: [--port, --timeout]
+    status: platform
+  - name: traceroute-udp
+    category: reachability
+    description: Trace using UDP probes.
+    usage: ripnet traceroute-udp TARGET --port N
+    flags: [--port, --timeout]
+    status: platform
+  - name: unblock-ip
+    category: firewall
+    description: Remove an IP block.
+    usage: ripnet unblock-ip --ip IP
+    flags: [--ip]
+    status: privileged
+  - name: unblock-port
+    category: firewall
+    description: Remove a port block.
+    usage: ripnet unblock-port --port N --protocol tcp
+    flags: [--port, --protocol]
+    status: privileged
+  - name: udp-scan
+    category: scanning
+    description: Scan UDP ports.
+    usage: ripnet udp-scan TARGET --start-port N --end-port N
+    flags: [--start-port, --end-port, --timeout, --verbose]
+    status: privileged
+  - name: vuln-scan
+    category: scanning
+    description: Run an authorized vulnerability scan.
+    usage: ripnet vuln-scan TARGET --port N
+    flags: [--port, --timeout, --verbose]
+    status: platform
+  - name: xmas-scan
+    category: scanning
+    description: Run an XMAS-style scan.
+    usage: ripnet xmas-scan TARGET --start-port N --end-port N
+    flags: [--start-port, --end-port, --timeout, --verbose]
+    status: privileged
