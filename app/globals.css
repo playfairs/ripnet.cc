@@ -432,6 +432,26 @@ h1 {
   background: rgba(246, 193, 119, 0.13);
   color: var(--gold);
 }
+.command-state.privileged {
+  background: rgba(235, 111, 146, 0.13);
+  color: var(--love);
+}
+.command-state.limited {
+  background: rgba(196, 167, 231, 0.13);
+  color: var(--iris);
+}
+.command-empty {
+  display: grid;
+  grid-column: 1 / -1;
+  justify-items: center;
+  gap: 10px;
+  color: var(--subtle);
+  padding: 54px 20px;
+  text-align: center;
+}
+.command-empty p {
+  margin: 0;
+}
 .row-arrow {
   align-self: center;
   color: var(--highlight-med);

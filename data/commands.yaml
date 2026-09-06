@@ -1,6 +1,18 @@
 # Source: src/ripnet/app/cli.d and src/ripnet/app/main.d
 
 commands:
+  - name: help
+    category: general
+    description: Show the ripnet command reference and flag usage.
+    usage: ripnet --help
+    flags: []
+    status: available
+  - name: version
+    category: general
+    description: Print the installed ripnet version.
+    usage: ripnet --version
+    flags: []
+    status: available
   - name: arp-cache-add
     category: local-network
     description: Add a persistent ARP cache entry.
