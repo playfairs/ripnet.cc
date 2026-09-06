@@ -53,7 +53,7 @@ export default async function DownloadPage() {
           <p className="eyebrow">
             <span className="status-dot" /> latest release
           </p>
-          <h1>Put ripnet in your toolkit.</h1>
+          <h1>put ripnet in your toolkit.</h1>
           <p className={styles.lede}>
             Download a ready-to-run binary for your machine, then install it on
             your PATH for fast network checks from anywhere.
