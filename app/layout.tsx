@@ -1,21 +1,14 @@
-import type { Metadata } from 'next';
-import { Orbitron } from 'next/font/google';
-import './globals.css';
-import Navigation from '@/components/Navigation';
-import Footer from '@/components/Footer';
-
-const orbitron = Orbitron({
-  subsets: ['latin'],
-  variable: '--font-orbitron',
-  display: 'swap',
-});
+import type { Metadata } from "next";
+import "./globals.css";
+import "./spotlight.css";
+import "./commands/spotlight.css";
+import Navigation from "../components/Navigation";
+import Footer from "../components/Footer";
 
 export const metadata: Metadata = {
-  title: 'ripnet',
-  description: 'Network diagnostics, packet analysis, observability, and authorized load-testing toolkit',
-  icons: {
-    icon: '/assets/icon/ripnet-(512x512).png',
-  },
+  title: "ripnet",
+  description:
+    "Network diagnostics, packet analysis, observability, and authorized load-testing toolkit",
 };
 
 export default function RootLayout({
@@ -24,7 +17,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={orbitron.variable}>
+    <html lang="en">
       <body>
         <Navigation />
         <main className="app-main">

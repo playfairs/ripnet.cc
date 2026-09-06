@@ -1,82 +1,52 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { useState } from 'react';
-import { Download, Menu, Terminal, X } from 'lucide-react';
-
-const navItems = [
-  { name: 'Home', href: '/', icon: Terminal },
-  { name: 'Downloads', href: '/downloads', icon: Download },
-];
-
-function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
-  const pathname = usePathname();
-
-  return (
-    <div className="nav-sections">
-      <div className="nav-group">
-        {navItems.map((item) => {
-          const Icon = item.icon;
-          const isActive = pathname === item.href;
-
-          return (
-            <Link
-              aria-current={isActive ? 'page' : undefined}
-              className={isActive ? 'active' : ''}
-              href={item.href}
-              key={item.name}
-              onClick={onNavigate}
-            >
-              <Icon aria-hidden="true" size={16} />
-              <span>{item.name}</span>
-              <small>{item.name === 'Home' ? 'start' : item.name.charAt(0)}</small>
-            </Link>
-          );
-        })}
-      </div>
-    </div>
-  );
-}
+import { Menu, X } from "lucide-react";
+import { useState } from "react";
 
 export default function Navigation() {
-  const [isOpen, setIsOpen] = useState(false);
-  const pathname = usePathname();
-
+  const [open, setOpen] = useState(false);
   return (
     <>
-      <aside className="sidebar">
-        <Link className="brand" href="/">
-          <img
-            alt="ripnet"
-            className="brand-mark"
-            src="/assets/icon/ripnet-banner-(500x100).png"
-          />
-          <small>network diagnostics toolkit</small>
-        </Link>
-        <NavLinks />
+      <aside className="top-shell">
+        <a className="wordmark" href="/">
+          <span>r</span>ipnet
+        </a>
+        <nav>
+          <a href="/commands">Commands</a>
+          <a href="/quick-start">Quick start</a>
+        </nav>
+        <a
+          className="shell-github"
+          href="https://github.com/playfairs/ripnet"
+          rel="noreferrer"
+          target="_blank"
+        >
+          GitHub
+        </a>
       </aside>
-
-      <header className="mobile-bar">
-        <Link className="brand compact" href="/">
-          <img
-            alt="ripnet"
-            className="brand-mark compact"
-            src="/assets/icon/ripnet-(512x512).png"
-          />
-          <small>{pathname === '/' ? 'home' : pathname.replace('/', '')}</small>
-        </Link>
+      <header className="mobile-shell">
+        <a className="wordmark" href="/">
+          <span>r</span>ipnet
+        </a>
         <button
-          aria-label={isOpen ? 'Close navigation' : 'Open navigation'}
-          className="icon-button"
-          onClick={() => setIsOpen((value) => !value)}
+          aria-label={open ? "Close menu" : "Open menu"}
+          onClick={() => setOpen(!open)}
           type="button"
         >
-          {isOpen ? <X aria-hidden="true" size={20} /> : <Menu aria-hidden="true" size={20} />}
+          {open ? <X size={20} /> : <Menu size={20} />}
         </button>
+        {open && (
+          <nav>
+            <a href="/commands" onClick={() => setOpen(false)}>
+              Commands
+            </a>
+            <a href="/quick-start" onClick={() => setOpen(false)}>
+              Quick start
+            </a>
+            <a href="https://github.com/playfairs/ripnet">GitHub</a>
+          </nav>
+        )}
       </header>
-
-      {isOpen ? <div className="mobile-drawer"><NavLinks onNavigate={() => setIsOpen(false)} /></div> : null}
     </>
   );
 }

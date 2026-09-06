@@ -1,151 +1,148 @@
-import Link from 'next/link';
-import { ArrowRight, Box, Cpu, Github, Search, Shield, Terminal, Zap } from 'lucide-react';
+import { readFileSync } from "node:fs";
+import path from "node:path";
+import { ArrowRight, Github, Shield, Terminal } from "lucide-react";
 
-const features = [
-  {
-    icon: Terminal,
-    title: 'Interface Statistics',
-    description: 'List interfaces, packet counts, byte totals, and error rates in a single view.',
-  },
-  {
-    icon: Box,
-    title: 'Packet Capture',
-    description: 'Capture traffic with BPF filters, promiscuous mode, and protocol-aware parsing.',
-  },
-  {
-    icon: Zap,
-    title: 'Stress Testing',
-    description: 'Run TCP and HTTP load tests with configurable concurrency, duration, and rate limits.',
-  },
-  {
-    icon: Search,
-    title: 'Port Scanning',
-    description: 'Scan ranges and identify services with timeout-aware probing.',
-  },
-  {
-    icon: Shield,
-    title: 'Vulnerability Detection',
-    description: 'Surface basic security issues before they become larger problems.',
-  },
-  {
-    icon: Cpu,
-    title: 'Process Monitoring',
-    description: 'Find processes that are actively using the network from your host.',
-  },
+const commandCount = (
+  readFileSync(path.join(process.cwd(), "data/commands.yaml"), "utf8").match(
+    /^  - name:/gm,
+  ) ?? []
+).length;
+
+const examples = [
+  ["Inspect interfaces", "ripnet list-interfaces"],
+  ["Check reachability", "ripnet ping 1.1.1.1"],
+  ["Resolve a domain", "ripnet dns-lookup playfairs.cc"],
 ];
 
 export default function Home() {
   return (
-    <div className="docs-page">
-      <header className="page-header hero-header">
+    <div className="overview-page">
+      <section className="overview-hero">
         <div>
-          <p className="eyebrow">ripnetwork project</p>
-          <h1>ripnet</h1>
+          <p className="eyebrow">
+            <span className="status-dot" /> ripnetwork{" "}
+          </p>
+          <h1>a networking tool for all</h1>
+          <p className="hero-lede">
+            Ripnet brings diagnostics, packet analysis, observability,
+            discovery, and authorized testing into one focused command line.
+          </p>
+          <div className="hero-actions">
+            <a className="primary-action" href="/commands">
+              Explore commands <ArrowRight size={16} />
+            </a>
+            <a
+              className="text-action"
+              href="https://github.com/playfairs/ripnet"
+              rel="noreferrer"
+              target="_blank"
+            >
+              <Github size={16} /> Source
+            </a>
+          </div>
+        </div>
+        <div className="overview-terminal">
+          <div className="terminal-top">
+            <span />
+            <span />
+            <span />
+            <small>ripnet</small>
+          </div>
+          <div className="terminal-body">
+            <p>
+              <i>$</i> ripnet list-interfaces
+            </p>
+            <p className="terminal-muted">XHC0 mtu=0 rx=0 tx=0</p>
+            <p className="terminal-muted">XHC1 mtu=0 rx=0 tx=0 ...</p>
+            <p>
+              <i>$</i> ripnet ping 1.1.1.1
+            </p>
+            <p className="terminal-good">1.1.1.1: reachable (24.00 ms)</p>
+            <p>
+              <i>$</i> ripnet dns-lookup example.com
+            </p>
+            <p className="terminal-good">104.20.23.154</p>
+            <p className="terminal-good">172.66.147.243</p>
+            <p>
+              <i>$</i> <span className="cursor" />
+            </p>
+          </div>
+        </div>
+      </section>
+      <section className="stat-grid">
+        <div>
+          <strong>{commandCount}</strong>
+          <span>commands documented</span>
+        </div>
+        <div>
+          <strong>D</strong>
+          <span>primary language</span>
+        </div>
+        <div>
+          <strong>CLI</strong>
+          <span>built for fast checks</span>
+        </div>
+        <div>
+          <strong>macOS, Linux, BSD</strong>
+          <span>platform-aware workflows</span>
+        </div>
+      </section>
+      <section className="overview-grid">
+        <article className="overview-card feature-card">
+          <p className="eyebrow">one reference</p>
+          <h2>Find the right operation.</h2>
           <p>
-            A compact toolkit for network diagnostics, observability, authorization-aware testing, and fast investigations.
+            Search commands by name, workflow, or flag. Every entry includes a
+            usage form and a clear note when it depends on platform tools or
+            privileges.
+          </p>
+          <a className="inline-link" href="/commands">
+            Open command reference <ArrowRight size={15} />
+          </a>
+        </article>
+        <article className="overview-card">
+          <Terminal size={20} />
+          <h2>Start small.</h2>
+          <div className="example-list">
+            {examples.map(([label, command]) => (
+              <div key={command}>
+                <span>{label}</span>
+                <code>{command}</code>
+              </div>
+            ))}
+          </div>
+        </article>
+      </section>
+      <section className="authorization-card">
+        <Shield size={21} />
+        <div>
+          <p className="eyebrow">responsible use</p>
+          <h2>Know the network before you touch it.</h2>
+          <p>
+            Use active scanning, packet capture, ARP operations, firewall
+            changes, and load testing only on systems and networks you own or
+            are explicitly authorized to test.
           </p>
         </div>
-        <div className="stat-stack" aria-label="Project highlights">
-          <div>
-            <strong>6</strong>
-            <span>capabilities</span>
-          </div>
-          <div>
-            <strong>CLI</strong>
-            <span>focused</span>
-          </div>
-        </div>
-      </header>
-
-      <section className="overview-strip" aria-label="Quick navigation">
-        <div>
-          <span>Download</span>
-          <code>make install</code>
-        </div>
-        <div>
-          <span>Docs</span>
-          <code>docs.ripnet.cc</code>
-        </div>
-        <div>
-          <span>Source</span>
-          <code>github.com/ripnetwork</code>
-        </div>
       </section>
-
-      <section className="group-board" aria-label="Website sections">
-        <div className="group-block">
-          <h2>Capabilities</h2>
-          <div className="group-links">
-            {features.map((feature) => {
-              const Icon = feature.icon;
-              return (
-                <div key={feature.title}>
-                  <span>
-                    <strong>{feature.title}</strong>
-                    <small>{feature.description}</small>
-                  </span>
-                  <Icon aria-hidden="true" size={15} />
-                </div>
-              );
-            })}
-          </div>
-        </div>
-
-        <div className="group-block">
-          <h2>Quick links</h2>
-          <div className="group-links">
-            <Link href="/downloads">
-              <span>
-                <strong>Downloads</strong>
-                <small>Build and install locally</small>
-              </span>
-              <ArrowRight aria-hidden="true" size={15} />
-            </Link>
-            <a href="https://docs.ripnet.cc" rel="noreferrer" target="_blank">
-              <span>
-                <strong>Documentation</strong>
-                <small>Command reference and usage notes</small>
-              </span>
-              <ArrowRight aria-hidden="true" size={15} />
-            </a>
-            <a href="https://github.com/playfairs/ripnet" rel="noreferrer" target="_blank">
-              <span>
-                <strong>GitHub</strong>
-                <small>Open source repository</small>
-              </span>
-              <Github aria-hidden="true" size={15} />
-            </a>
-          </div>
-        </div>
-      </section>
-
-      <section className="reference-panel" aria-label="Project overview">
-        <div className="reference-heading">
-          <h2>About ripnet</h2>
-          <p>Built for operators, researchers, and developers.</p>
-        </div>
-        <div className="option-table">
-          <div>
-            <code>Language</code>
-            <span>C17 with portability in mind.</span>
-          </div>
-          <div>
-            <code>Platforms</code>
-            <span>Linux and macOS with minimal dependencies.</span>
-          </div>
-          <div>
-            <code>Use cases</code>
-            <span>Inspection, analysis, security testing, and performance checks.</span>
-          </div>
-        </div>
-      </section>
-
-      <section className="notice-panel" aria-label="Authorization notice">
-        <Shield aria-hidden="true" size={18} />
-        <p>
-          Use these network tools only on systems and networks you own or have explicit authorization to test.
-        </p>
-      </section>
+      <footer className="site-footer">
+        <span>© 2026 ripnetwork</span>
+        <a
+          href="https://github.com/playfairs/ripnet"
+          rel="noreferrer"
+          target="_blank"
+        >
+          GitHub
+        </a>
+        <a
+          href="https://github.com/playfairs/ripnet/issues"
+          rel="noreferrer"
+          target="_blank"
+        >
+          Issues
+        </a>
+        <span className="footer-build">D / Meson / libpcap</span>
+      </footer>
     </div>
   );
 }
