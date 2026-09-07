@@ -37,7 +37,7 @@ export default async function Home() {
           <p className="eyebrow">
             <span className="status-dot" /> ripnetwork{" "}
           </p>
-          <h1>a networking tool for all</h1>
+          <h1>a networking tool for all.</h1>
           <p className="hero-lede">
             Ripnet brings diagnostics, packet analysis, observability,
             discovery, and authorized testing into one focused command line.
