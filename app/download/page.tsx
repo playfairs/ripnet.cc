@@ -72,7 +72,19 @@ export default async function DownloadPage() {
         </div>
         <div className={styles.releaseStamp}>
           <span>current</span>
-          <strong>{release?.tag_name ?? "unavailable"}</strong>
+          <strong>
+            {release ? (
+              <a
+                href={`https://github.com/${repository}/tree/${release.tag_name}`}
+                rel="noreferrer"
+                target="_blank"
+              >
+                {release.tag_name}
+              </a>
+            ) : (
+              "unavailable"
+            )}
+          </strong>
           <small>
             {release?.published_at
               ? new Date(release.published_at).toLocaleDateString("en-US", {

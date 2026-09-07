@@ -38,6 +38,14 @@
   color: var(--foam);
   font: 800 1.45rem var(--mono);
 }
+.releaseStamp strong a {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+.releaseStamp strong a:hover {
+  color: var(--love);
+}
 .assetGrid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
