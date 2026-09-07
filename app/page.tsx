@@ -2,14 +2,18 @@ import { readFileSync } from "node:fs";
 import path from "node:path";
 import { ArrowRight, Github, Shield, Terminal } from "lucide-react";
 
-const versionUrl =
-  "https://raw.githubusercontent.com/playfairs/ripnet/refs/heads/master/VERSION";
+const latestReleaseUrl =
+  "https://api.github.com/repos/playfairs/ripnet/releases/latest";
 
 async function getLatestVersion() {
   try {
-    const response = await fetch(versionUrl, { next: { revalidate: 300 } });
+    const response = await fetch(latestReleaseUrl, {
+      headers: { Accept: "application/vnd.github+json" },
+      next: { revalidate: 300 },
+    });
     if (!response.ok) return "unavailable";
-    return (await response.text()).trim() || "unavailable";
+    const release = (await response.json()) as { tag_name?: string };
+    return release.tag_name || "unavailable";
   } catch {
     return "unavailable";
   }
@@ -44,7 +48,7 @@ export default async function Home() {
           </p>
           <div className="hero-actions">
             <a className="primary-action" href="/download">
-              Download v{latestVersion} <ArrowRight size={16} />
+              Download {latestVersion} <ArrowRight size={16} />
             </a>
             <a className="primary-action" href="/commands">
               Explore commands <ArrowRight size={16} />
@@ -89,7 +93,7 @@ export default async function Home() {
       </section>
       <section className="stat-grid">
         <div>
-          <strong>v{latestVersion}</strong>
+          <strong>{latestVersion}</strong>
           <span>latest version</span>
         </div>
         <div>
