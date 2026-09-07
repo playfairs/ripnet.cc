@@ -90,7 +90,7 @@ export default function CommandsClient({ entries }: Props) {
           <p className="eyebrow">
             <span className="status-dot" /> commands
           </p>
-          <h1>command reference</h1>
+          <h1>command reference.</h1>
           <p>
             Positional commands first. Flags explain the detail. Search the full
             ripnet surface by workflow or name.
