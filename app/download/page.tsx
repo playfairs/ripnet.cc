@@ -51,12 +51,12 @@ export default async function DownloadPage() {
       <header className={styles.hero}>
         <div>
           <p className="eyebrow">
-            <span className="status-dot" /> latest release
+            <ArrowDownToLine aria-hidden="true" size={14} /> latest release
           </p>
           <h1>download ripnet.</h1>
           <p className={styles.lede}>
             Download a ready-to-run binary for your machine, then install it on
-            your PATH for fast network checks from anywhere.
+            your PATH.
           </p>
         </div>
         <div className={styles.releaseStamp}>
@@ -79,15 +79,11 @@ export default async function DownloadPage() {
           asset={linuxAsset}
           platform="Linux"
           detail="x86_64 executable"
-          install="Linux install"
-          command="sudo install -m 755 ripnet-vVERSION-linux-x86_64 /usr/local/bin/ripnet"
         />
         <DownloadCard
           asset={macosAsset}
           platform="macOS"
           detail="Apple Silicon / arm64 executable"
-          install="macOS install"
-          command="sudo install -m 755 ripnet-vVERSION-macos-arm64 /usr/local/bin/ripnet"
         />
       </section>
 
@@ -147,14 +143,10 @@ function DownloadCard({
   asset,
   platform,
   detail,
-  install,
-  command,
 }: {
   asset?: ReleaseAsset;
   platform: string;
   detail: string;
-  install: string;
-  command: string;
 }) {
   return (
     <article className={styles.assetCard}>
@@ -176,10 +168,6 @@ function DownloadCard({
       ) : (
         <span className={styles.disabledAction}>Unavailable</span>
       )}
-      <p className={styles.cardHint}>
-        {install}: replace <code>VERSION</code> in <code>{command}</code> with the
-        downloaded filename.
-      </p>
     </article>
   );
 }
