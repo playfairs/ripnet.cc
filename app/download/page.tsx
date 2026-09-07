@@ -1,4 +1,5 @@
-import { ArrowDownToLine, Check, Github, Terminal } from "lucide-react";
+import { ArrowDownToLine, Github, Terminal } from "lucide-react";
+import CopyCommandsButton from "./CopyCommandsButton";
 import styles from "./download.module.css";
 
 type ReleaseAsset = {
@@ -45,6 +46,16 @@ export default async function DownloadPage() {
   const macosAsset = release?.assets.find((asset) =>
     asset.name.endsWith("macos-arm64"),
   );
+  const linuxFilename = linuxAsset?.name ?? "ripnet-vVERSION-linux-x86_64";
+  const macosFilename = macosAsset?.name ?? "ripnet-vVERSION-macos-arm64";
+  const linuxCommands = [
+    `chmod +x ${linuxFilename}`,
+    `sudo install -m 755 ${linuxFilename} /usr/local/bin/ripnet`,
+  ];
+  const macosCommands = [
+    `chmod +x ${macosFilename}`,
+    `sudo install -m 755 ${macosFilename} /usr/local/bin/ripnet`,
+  ];
 
   return (
     <div className={styles.page}>
@@ -101,10 +112,11 @@ export default async function DownloadPage() {
             <li>Run the install command from the folder containing it.</li>
           </ol>
           <code>
-            chmod +x ripnet-vVERSION-linux-x86_64
+            {linuxCommands[0]}
             <br />
-            sudo install -m 755 ripnet-vVERSION-linux-x86_64 /usr/local/bin/ripnet
+            {linuxCommands[1]}
           </code>
+          <CopyCommandsButton commands={linuxCommands.join("\n")} />
           <p>Then verify it with <code>ripnet --version</code>.</p>
         </article>
         <article className={styles.installPanel}>
@@ -117,13 +129,14 @@ export default async function DownloadPage() {
           </div>
           <ol>
             <li>Download the macOS arm64 asset above.</li>
-            <li>Run these commands from the download folder.</li>
+            <li>Run the install command from the folder containing it.</li>
           </ol>
           <code>
-            chmod +x ripnet-vVERSION-macos-arm64
+            {macosCommands[0]}
             <br />
-            sudo install -m 755 ripnet-vVERSION-macos-arm64 /usr/local/bin/ripnet
+            {macosCommands[1]}
           </code>
+          <CopyCommandsButton commands={macosCommands.join("\n")} />
           <p>Then verify it with <code>ripnet --version</code>.</p>
         </article>
       </section>
