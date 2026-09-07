@@ -145,7 +145,10 @@ export default async function DownloadPage() {
         />
       </section>
 
-      <section className={styles.nightlySection} aria-labelledby="nightly-title">
+      <section
+        className={styles.nightlySection}
+        aria-labelledby="nightly-title"
+      >
         <div className={styles.nightlyIntro}>
           <div>
             <p className="eyebrow">
@@ -214,7 +217,9 @@ export default async function DownloadPage() {
             {linuxCommands[1]}
           </code>
           <CopyCommandsButton commands={linuxCommands.join("\n")} />
-          <p>Then verify it with <code>ripnet --version</code>.</p>
+          <p>
+            Then verify it with <code>ripnet --version</code>.
+          </p>
         </article>
         <article className={styles.installPanel}>
           <div className={styles.panelHeading}>
@@ -234,14 +239,22 @@ export default async function DownloadPage() {
             {macosCommands[1]}
           </code>
           <CopyCommandsButton commands={macosCommands.join("\n")} />
-          <p>Then verify it with <code>ripnet --version</code>.</p>
+          <p>
+            Then verify it with <code>ripnet --version</code>.
+          </p>
         </article>
       </section>
 
       <section className={styles.sourceLine}>
         <Github size={18} />
         <span>Assets are served directly from the latest GitHub release.</span>
-        <a href={release?.html_url ?? `https://github.com/${repository}/releases`} rel="noreferrer" target="_blank">
+        <a
+          href={
+            release?.html_url ?? `https://github.com/${repository}/releases`
+          }
+          rel="noreferrer"
+          target="_blank"
+        >
           View release on GitHub
         </a>
       </section>
@@ -272,7 +285,11 @@ function DownloadCard({
         {asset && <span>{formatSize(asset.size)}</span>}
       </div>
       {asset ? (
-        <a className="primary-action" download href={asset.browser_download_url}>
+        <a
+          className="primary-action"
+          download
+          href={asset.browser_download_url}
+        >
           <ArrowDownToLine size={16} /> Download
         </a>
       ) : (

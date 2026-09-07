@@ -499,7 +499,7 @@ h1 {
   margin-left: auto;
   font: 0.68rem var(--mono);
 }
-@media(max-width:900px) {
+@media (max-width: 900px) {
   .top-shell {
     display: none;
   }
@@ -556,7 +556,7 @@ h1 {
     text-align: left;
   }
 }
-@media(max-width:560px) {
+@media (max-width: 560px) {
   h1 {
     font-size: 3.5rem;
   }

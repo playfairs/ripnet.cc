@@ -248,7 +248,7 @@
 .sourceLine a:hover {
   color: var(--text);
 }
-@media(max-width:700px) {
+@media (max-width: 700px) {
   .hero,
   .assetGrid,
   .installGrid {

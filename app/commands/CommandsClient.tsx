@@ -37,7 +37,10 @@ export default function CommandsClient({ entries }: Props) {
   const filterMenuRef = useRef<HTMLDivElement>(null);
   const [selectedEntry, setSelectedEntry] = useState<CommandEntry | null>(null);
   const filters = useMemo(
-    () => ["All", ...new Set(entries.map((entry) => categoryLabel(entry.category)))],
+    () => [
+      "All",
+      ...new Set(entries.map((entry) => categoryLabel(entry.category))),
+    ],
     [entries],
   );
   const visible = useMemo(() => {
@@ -149,37 +152,39 @@ export default function CommandsClient({ entries }: Props) {
         </div>
       </div>
       <div className="command-list">
-        {visible.length ? visible.map((entry) => (
-          <article
-            aria-label={`Open details for ${entry.name}`}
-            className="command-row"
-            key={entry.name}
-            onClick={() => setSelectedEntry(entry)}
-            onKeyDown={(event) => {
-              if (event.key === "Enter" || event.key === " ") {
-                event.preventDefault();
-                setSelectedEntry(entry);
-              }
-            }}
-            role="button"
-            tabIndex={0}
-          >
-            <div className="command-marker">
-              <Terminal size={15} />
-            </div>
-            <div className="command-detail">
-              <div className="command-title">
-                <h2>{entry.name}</h2>
-                <span className={`command-state ${entry.status}`}>
-                  {statusLabels[entry.status] ?? entry.status}
-                </span>
+        {visible.length ? (
+          visible.map((entry) => (
+            <article
+              aria-label={`Open details for ${entry.name}`}
+              className="command-row"
+              key={entry.name}
+              onClick={() => setSelectedEntry(entry)}
+              onKeyDown={(event) => {
+                if (event.key === "Enter" || event.key === " ") {
+                  event.preventDefault();
+                  setSelectedEntry(entry);
+                }
+              }}
+              role="button"
+              tabIndex={0}
+            >
+              <div className="command-marker">
+                <Terminal size={15} />
               </div>
-              <p>{entry.description}</p>
-              <code>{entry.usage}</code>
-            </div>
-            <ChevronRight className="row-arrow" size={17} />
-          </article>
-        )) : (
+              <div className="command-detail">
+                <div className="command-title">
+                  <h2>{entry.name}</h2>
+                  <span className={`command-state ${entry.status}`}>
+                    {statusLabels[entry.status] ?? entry.status}
+                  </span>
+                </div>
+                <p>{entry.description}</p>
+                <code>{entry.usage}</code>
+              </div>
+              <ChevronRight className="row-arrow" size={17} />
+            </article>
+          ))
+        ) : (
           <div className="command-empty">
             <Terminal size={18} />
             <p>No commands match this search.</p>
