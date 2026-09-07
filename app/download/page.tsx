@@ -1,4 +1,4 @@
-import { ArrowDownToLine, Github, Terminal } from "lucide-react";
+import { ArrowDownToLine, GitBranch, Github, Terminal } from "lucide-react";
 import CopyCommandsButton from "./CopyCommandsButton";
 import styles from "./download.module.css";
 
@@ -34,16 +34,51 @@ async function getLatestRelease(): Promise<LatestRelease | null> {
   }
 }
 
+async function getLatestNightlyRelease(): Promise<LatestRelease | null> {
+  try {
+    const response = await fetch(
+      `https://api.github.com/repos/${repository}/releases?per_page=100`,
+      {
+        headers: { Accept: "application/vnd.github+json" },
+        next: { revalidate: 300 },
+      },
+    );
+
+    if (!response.ok) return null;
+    const releases = (await response.json()) as LatestRelease[];
+    return (
+      releases
+        .filter((candidate) => candidate.tag_name.startsWith("ripnet-dev."))
+        .sort((left, right) => {
+          const leftNumber = Number(left.tag_name.replace("ripnet-dev.", ""));
+          const rightNumber = Number(right.tag_name.replace("ripnet-dev.", ""));
+          return rightNumber - leftNumber;
+        })[0] ?? null
+    );
+  } catch {
+    return null;
+  }
+}
+
 function formatSize(bytes: number) {
   return `${(bytes / 1024 / 1024).toFixed(1)} MB`;
 }
 
 export default async function DownloadPage() {
-  const release = await getLatestRelease();
+  const [release, nightlyRelease] = await Promise.all([
+    getLatestRelease(),
+    getLatestNightlyRelease(),
+  ]);
   const linuxAsset = release?.assets.find((asset) =>
     asset.name.endsWith("linux-x86_64"),
   );
   const macosAsset = release?.assets.find((asset) =>
+    asset.name.endsWith("macos-arm64"),
+  );
+  const nightlyLinuxAsset = nightlyRelease?.assets.find((asset) =>
+    asset.name.endsWith("linux-x86_64"),
+  );
+  const nightlyMacosAsset = nightlyRelease?.assets.find((asset) =>
     asset.name.endsWith("macos-arm64"),
   );
   const linuxFilename = linuxAsset?.name ?? "ripnet-vVERSION-linux-x86_64";
@@ -108,6 +143,56 @@ export default async function DownloadPage() {
           platform="macOS"
           detail="Apple Silicon / arm64 executable"
         />
+      </section>
+
+      <section className={styles.nightlySection} aria-labelledby="nightly-title">
+        <div className={styles.nightlyIntro}>
+          <div>
+            <p className="eyebrow">
+              <GitBranch aria-hidden="true" size={14} /> nightly builds
+            </p>
+            <h2 id="nightly-title">latest from dev.</h2>
+            <p>
+              Fresh prerelease binaries built from the latest push to the dev
+              branch.
+            </p>
+          </div>
+          {nightlyRelease ? (
+            <a
+              className={styles.nightlyTag}
+              href={`https://github.com/${repository}/tree/${nightlyRelease.tag_name}`}
+              rel="noreferrer"
+              target="_blank"
+            >
+              {nightlyRelease.tag_name}
+            </a>
+          ) : (
+            <span className={styles.nightlyTag}>unavailable</span>
+          )}
+        </div>
+        <div className={styles.assetGrid} aria-label="Nightly downloads">
+          <DownloadCard
+            asset={nightlyLinuxAsset}
+            platform="Linux nightly"
+            detail="x86_64 executable"
+          />
+          <DownloadCard
+            asset={nightlyMacosAsset}
+            platform="macOS nightly"
+            detail="Apple Silicon / arm64 executable"
+          />
+        </div>
+        <a
+          className={styles.nightlyReleaseLink}
+          href={
+            nightlyRelease?.html_url ??
+            `https://github.com/${repository}/releases`
+          }
+          rel="noreferrer"
+          target="_blank"
+        >
+          View nightly release on GitHub
+        </a>
       </section>
 
       <section className={styles.installGrid}>
