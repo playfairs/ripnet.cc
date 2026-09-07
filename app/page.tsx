@@ -167,7 +167,7 @@ export default async function Home() {
         >
           Issues
         </a>
-        <span className="footer-build">D / Meson / libpcap</span>
+        <span className="footer-build">D / Nox / libpcap</span>
       </footer>
     </div>
   );
