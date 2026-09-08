@@ -34,12 +34,17 @@ export default function CommandsClient({ entries }: Props) {
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState("All");
   const [filterOpen, setFilterOpen] = useState(false);
+  const [collapsedCategories, setCollapsedCategories] = useState<Set<string>>(
+    () => new Set(entries.map((entry) => categoryLabel(entry.category))),
+  );
   const filterMenuRef = useRef<HTMLDivElement>(null);
   const [selectedEntry, setSelectedEntry] = useState<CommandEntry | null>(null);
   const filters = useMemo(
     () => [
       "All",
-      ...new Set(entries.map((entry) => categoryLabel(entry.category))),
+      ...Array.from(
+        new Set(entries.map((entry) => categoryLabel(entry.category))),
+      ).sort((first, second) => first.localeCompare(second)),
     ],
     [entries],
   );
@@ -62,6 +67,67 @@ export default function CommandsClient({ entries }: Props) {
       );
     });
   }, [entries, filter, query]);
+  const groupedVisible = useMemo(() => {
+    const groups = new Map<string, CommandEntry[]>();
+    visible.forEach((entry) => {
+      const category = categoryLabel(entry.category);
+      const group = groups.get(category) ?? [];
+      group.push(entry);
+      groups.set(category, group);
+    });
+    return Array.from(groups.entries())
+      .sort(([first], [second]) => first.localeCompare(second))
+      .map(
+        ([category, group]) =>
+          [
+            category,
+            group.sort((first, second) =>
+              first.name.localeCompare(second.name),
+            ),
+          ] as const,
+      );
+  }, [visible]);
+
+  const renderCommand = (entry: CommandEntry) => (
+    <article
+      aria-label={`Open details for ${entry.name}`}
+      className="command-row"
+      key={entry.name}
+      onClick={() => setSelectedEntry(entry)}
+      onKeyDown={(event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          setSelectedEntry(entry);
+        }
+      }}
+      role="button"
+      tabIndex={0}
+    >
+      <div className="command-marker">
+        <Terminal size={15} />
+      </div>
+      <div className="command-detail">
+        <div className="command-title">
+          <h2>{entry.name}</h2>
+          <span className={`command-state ${entry.status}`}>
+            {statusLabels[entry.status] ?? entry.status}
+          </span>
+        </div>
+        <p>{entry.description}</p>
+        <code>{entry.usage}</code>
+      </div>
+      <ChevronRight className="row-arrow" size={17} />
+    </article>
+  );
+
+  const toggleCategory = (category: string) => {
+    setCollapsedCategories((current) => {
+      const next = new Set(current);
+      if (next.has(category)) next.delete(category);
+      else next.add(category);
+      return next;
+    });
+  };
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -100,8 +166,8 @@ export default function CommandsClient({ entries }: Props) {
           </p>
         </div>
         <div className="command-count">
-          <strong>{entries.length}</strong>
-          <span>commands indexed</span>
+          <strong>{entries.length} commands</strong>
+          <span>across {filters.length - 1} categories</span>
         </div>
       </header>
       <div className="command-toolbar">
@@ -152,37 +218,46 @@ export default function CommandsClient({ entries }: Props) {
         </div>
       </div>
       <div className="command-list">
-        {visible.length ? (
-          visible.map((entry) => (
-            <article
-              aria-label={`Open details for ${entry.name}`}
-              className="command-row"
-              key={entry.name}
-              onClick={() => setSelectedEntry(entry)}
-              onKeyDown={(event) => {
-                if (event.key === "Enter" || event.key === " ") {
-                  event.preventDefault();
-                  setSelectedEntry(entry);
-                }
-              }}
-              role="button"
-              tabIndex={0}
+        {groupedVisible.length ? (
+          groupedVisible.map(([category, group]) => (
+            <div
+              className={`command-group${
+                group.length === 1
+                  ? " is-single"
+                  : group.length % 2 === 1
+                    ? " is-odd"
+                    : ""
+              }`}
+              key={category}
             >
-              <div className="command-marker">
-                <Terminal size={15} />
-              </div>
-              <div className="command-detail">
-                <div className="command-title">
-                  <h2>{entry.name}</h2>
-                  <span className={`command-state ${entry.status}`}>
-                    {statusLabels[entry.status] ?? entry.status}
-                  </span>
+              <button
+                aria-controls={`commands-${category.toLowerCase().replaceAll(" ", "-")}`}
+                aria-expanded={!collapsedCategories.has(category)}
+                className="command-category-heading"
+                onClick={() => toggleCategory(category)}
+                type="button"
+              >
+                <h2>{category}</h2>
+                <span>
+                  {group.length} commands
+                  <ChevronRight
+                    aria-hidden="true"
+                    className={
+                      collapsedCategories.has(category) ? "" : "is-expanded"
+                    }
+                    size={15}
+                  />
+                </span>
+              </button>
+              {!collapsedCategories.has(category) && (
+                <div
+                  className="command-group-rows"
+                  id={`commands-${category.toLowerCase().replaceAll(" ", "-")}`}
+                >
+                  {group.map(renderCommand)}
                 </div>
-                <p>{entry.description}</p>
-                <code>{entry.usage}</code>
-              </div>
-              <ChevronRight className="row-arrow" size={17} />
-            </article>
+              )}
+            </div>
           ))
         ) : (
           <div className="command-empty">
